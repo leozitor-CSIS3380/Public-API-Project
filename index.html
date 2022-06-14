@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <title>Public API Requests</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="css/normalize.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+
+    <style>
+
+        button {
+            background: none;
+            color: inherit;
+            border: none;
+            padding: 0;
+            font: inherit;
+            cursor: pointer;
+            outline: inherit;
+        }
+    </style>
+</head>
+<body>
+
+<!-- =======================
+    Gallery container
+======================== -->
+<header>
+    <div class="header-inner-container">
+        <div class="header-text-container">
+            <h1>MY COMPANY EMPLOYEE DIRECTORY</h1>
+        </div>
+
+        <div class="search-container">
+            <!-- ======================
+                Search markup:
+
+                You can use the commented out markup below as a template
+                for your search feature, but you must use JS to create and
+                append it to `search-container` div.
+
+                IMPORTANT: Altering the arrangement of the markup and the
+                attributes used may break the styles or functionality.
+
+                <form action="#" method="get">
+                    <input type="search" id="search-input" class="search-input" placeholder="Search...">
+                    <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+                </form>
+            ======================= -->
+            <form action="#" method="get">
+                <input type="search" id="search-input" class="search-input" placeholder="Search...">
+                <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+            </form>
+        </div>
+    </div>
+</header>
+
+<div id="gallery" class="gallery">
+    <!-- ======================
+        Gallery markup:
+
+        You can use the commented out markup below as a template
+        for each of your Gallery items, but you must use JS to
+        create and append them to the `gallery` div.
+
+        IMPORTANT: Altering the arrangement of the markup and the
+        attributes used may break the styles or functionality.
+
+        <div class="card">
+            <div class="card-img-container">
+                <img class="card-img" src="https://placehold.it/90x90" alt="profile picture">
+            </div>
+            <div class="card-info-container">
+                <h3 id="name" class="card-name cap">first last</h3>
+                <p class="card-text">email</p>
+                <p class="card-text cap">city, state</p>
+            </div>
+        </div>
+    ======================= -->
+
+</div>
+
+<!-- =======================
+    Modal markup:
+
+    You can use the commented out markup below as a template
+    for your modal, but you must use JS to create and append
+    it to `body`.
+
+    IMPORTANT: Altering the arrangement of the markup and the
+    attributes used may break the styles or functionality.
+
+    <div class="modal-container">
+        <div class="modal">
+            <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
+            <div class="modal-info-container">
+                <img class="modal-img" src="https://placehold.it/125x125" alt="profile picture">
+                <h3 id="name" class="modal-name cap">name</h3>
+                <p class="modal-text">email</p>
+                <p class="modal-text cap">city</p>
+                <hr>
+                <p class="modal-text">(555) 555-5555</p>
+                <p class="modal-text">123 Portland Ave., Portland, OR 97204</p>
+                <p class="modal-text">Birthday: 10/21/2015</p>
+            </div>
+        </div>
+
+        // IMPORTANT: Below is only for exceeds tasks
+        <div class="modal-btn-container">
+            <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
+            <button type="button" id="modal-next" class="modal-next btn">Next</button>
+        </div>
+    </div>
+======================== -->
+
+<!-- Add your JS here or link to a js file -->
+
+<div class="modal-container">
+    <!--        <div class="modal">-->
+    <!--            <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>-->
+    <!--            <div class="modal-info-container">-->
+    <!--                <img class="modal-img" src="https://placehold.it/125x125" alt="profile picture">-->
+    <!--                <h3 id="name" class="modal-name cap">name</h3>-->
+    <!--                <p class="modal-text">email</p>-->
+    <!--                <p class="modal-text cap">city</p>-->
+    <!--                <hr>-->
+    <!--                <p class="modal-text">(555) 555-5555</p>-->
+    <!--                <p class="modal-text">123 Portland Ave., Portland, OR 97204</p>-->
+    <!--                <p class="modal-text">Birthday: 10/21/2015</p>-->
+    <!--            </div>-->
+    <!--        </div>-->
+
+    <!--        // IMPORTANT: Below is only for exceeds tasks-->
+    <!--        <div class="modal-btn-container">-->
+    <!--            <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>-->
+    <!--            <button type="button" id="modal-next" class="modal-next btn">Next</button>-->
+    <!--        </div>-->
+
+</div>
+<script>
+    var modalContainer = document.querySelector('.modal-container')
+
+    // create a card
+    function createCard(userJson) {
+        let card = document.createElement('div')
+        card.classList.add("card")
+        card.id = userJson.id
+        let button = document.createElement('button')
+        button.type = 'button'
+        button.addEventListener('click', () => {
+            let mod = document.querySelector('.modal-container')
+            mod.style.display = 'block'
+            console.log(card.id)
+            createModal(userJson)
+
+        })
+        let cardCont = document.createElement('div')
+        cardCont.classList.add('card-img-container')
+        let img = document.createElement('img')
+        img.classList.add('card-img')
+        img.src = `${userJson.picture.thumbnail}`
+        button.append(img)
+        cardCont.append(button)
+
+        card.append(cardCont)
+
+        let cardContSecond = document.createElement('div')
+        cardContSecond.classList.add('card-img-container')
+
+        let cardName = document.createElement('div')
+        cardName.classList.add('card-name', 'cap')
+        cardName.id = 'card-name'
+        cardName.innerHTML = `${userJson.name.first} ${userJson.name.last}`
+
+        let p1 = document.createElement('p')
+        p1.classList.add('card-text')
+        p1.innerHTML = userJson.email
+        let p2 = document.createElement('p')
+        p2.classList.add('card-text', 'cap')
+        p2.innerHTML = `${userJson.location.city} ${userJson.location.state}`
+
+        cardContSecond.append(cardName)
+        cardContSecond.append(p1)
+        cardContSecond.append(p2)
+
+        card.append(cardContSecond)
+
+        let gallery = document.querySelector('#gallery')
+        gallery.append(card)
+
+    }
+
+    function createModal(userJson) {
+        let button = document.createElement('button')
+        button.addEventListener('click', () => modalContainer.style.display = 'none')
+        console.log(userJson)
+        let modal = `<div class="modal">
+        <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
+        <div class="modal-info-container">
+            <img class="modal-img" src="${userJson.picture.thumbnail}" alt="profile picture">
+                <h3 id="name" class="modal-name cap"> ${userJson.name.first} ${userJson.name.first}</h3>
+                <p class="modal-text">${userJson.email}</p>
+                <p class="modal-text cap">${userJson.location.city}</p>
+                <hr>
+                    <p class="modal-text">${userJson.phone}</p>
+                    <p class="modal-text">${userJson.location.street.name} ${userJson.location.street.number}</p>
+                    <p class="modal-text">Birthday: 10/21/2015</p>
+        </div>
+    </div>
+
+<!--    // IMPORTANT: Below is only for exceeds tasks-->
+<!--    <div class="modal-btn-container">-->
+<!--        <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>-->
+<!--        <button type="button" id="modal-next" class="modal-next btn">Next</button>-->
+<!--    </div>-->
+        `
+
+        let modalCont = document.querySelector('.modal-container')
+        modalCont.innerHTML = modal
+        let closeBtn = document.querySelector('#modal-close-btn')
+        closeBtn.addEventListener('click', () => modalContainer.style.display = 'none')
+        // modalCont.append(button)
+    }
+
+
+    // fetch all the 12 users
+    async function fetchRandomUsers() {
+        let url = 'https://randomuser.me/api/?results=12'
+
+        return await fetch(url)
+            // Convert the data into JavaScript
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data)
+                let users = data.results
+                for (let i in users) {
+                    let userJson = users[i]
+                    userJson["id"] = i
+                    createCard(userJson)
+                }
+                return data
+            })
+
+            // Log out any errors
+            .catch((error) => console.error(error))
+    }
+
+
+    fetchRandomUsers()
+
+    modalContainer.style.display = 'none'
+
+</script>
+</body>
+</html>
